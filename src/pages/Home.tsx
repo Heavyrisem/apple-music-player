@@ -1,15 +1,14 @@
 import React from 'react';
 
-import tw from 'twin.macro';
-
-import HelloWorld from '@components/HelloWorld';
+import AudioPlayer from '@components/AudioPlayer';
+import CoverImage from '@components/CoverImage';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 
 const Home: React.FC = () => {
   return (
     <DefaultLayout>
-      <div css={[tw`text-4xl font-extrabold mb-8`]}>Home</div>
-      <HelloWorld />
+      <CoverImage src="./heat_waves.jpg" />
+      <AudioPlayer src="heat_waves.mp3" title="Heat Waves" author="Glass Animals" />
     </DefaultLayout>
   );
 };
