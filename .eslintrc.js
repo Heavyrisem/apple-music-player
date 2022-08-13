@@ -49,7 +49,7 @@ module.exports = {
         'import-helpers/order-imports': [
             'error',
             {
-                groups: ['/^react/', 'module', '/^@/', ['parent', 'sibling', 'index']],
+                groups: ['/^react/', ['module', '/^@emotion/'], '/^@/', ['parent', 'sibling', 'index']],
                 alphabetize: {
                     order: 'asc',
                     caseInsensitive: true,

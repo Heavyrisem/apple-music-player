@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
+import { css } from '@emotion/react';
 import tw from 'twin.macro';
 
-import { css } from '@emotion/react';
 import { bgTransparentGray } from '@styles/globalStyles';
 
 interface RangeSliderProps {
@@ -62,7 +62,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
     <input
       type="range"
       value={valueState}
-      css={[InputRangeStyle]}
+      css={InputRangeStyle}
       min={min}
       max={max}
       className="cursor-ew-resize"

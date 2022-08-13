@@ -8,7 +8,12 @@ const Home: React.FC = () => {
   return (
     <DefaultLayout>
       <CoverImage src="./heat_waves.jpg" />
-      <AudioPlayer src="heat_waves.mp3" title="Heat Waves" author="Glass Animals" />
+      <AudioPlayer
+        src="heat_waves.mp3"
+        title="Heat Waves"
+        artist="Glass Animals"
+        album="Dreamland"
+      />
     </DefaultLayout>
   );
 };
