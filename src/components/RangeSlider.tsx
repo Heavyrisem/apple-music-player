@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { css } from '@emotion/react';
 import tw from 'twin.macro';
@@ -25,14 +25,15 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 
   // @emotion/react 의 css 를 불러와서 작업
   const InputRangeStyle = useMemo(() => {
-    const width = `${(valueState / max) * 100}%`;
+    const v = value ?? valueState;
+    const width = `${(v / max) * 100}%`;
 
     return css`
       ${tw`appearance-none w-full rounded-full outline-none border-none opacity-95 relative h-1`}
       ${bgTransparentGray}
 
       &::before {
-        ${tw`h-1 rounded-full float-left absolute bg-white min-w-[.8%]`}
+        ${tw`h-1 rounded-full float-left absolute bg-white min-w-[.8%] duration-75`}
         z-index: -1;
         content: '';
         width: ${width};
@@ -48,7 +49,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         opacity: ${showCursor ? 1 : 0};
       }
     `;
-  }, [max, showCursor, valueState]);
+  }, [max, showCursor, value, valueState]);
 
   const handleValueChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +59,15 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
     [onChange],
   );
 
+  useEffect(() => {
+    setValueState(value);
+    // console.log('setValue', value);
+  }, [value]);
+
   return (
     <input
       type="range"
-      value={valueState}
+      value={value ?? valueState}
       css={InputRangeStyle}
       min={min}
       max={max}
