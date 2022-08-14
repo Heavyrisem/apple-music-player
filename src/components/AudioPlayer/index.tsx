@@ -21,8 +21,15 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [showLyric, setShowLyric] = useState(false);
+
+  const handleLyricClick = useCallback(() => {
+    setShowLyric(!showLyric);
+  }, [showLyric]);
 
   const handlePlayClick = useCallback(() => {
+    if (audioRef.current) audioRef.current.volume = 0.1;
+
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
@@ -101,6 +108,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
       <AudioController
         isHover={isHover}
         isPlaying={isPlaying}
+        showLyric={showLyric}
+        onLyricClick={handleLyricClick}
         onPlayClick={handlePlayClick}
         {...rest}
       />

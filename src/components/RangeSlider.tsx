@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { css } from '@emotion/react';
+import { CSSInterpolation } from '@emotion/serialize';
 import tw from 'twin.macro';
 
 import { bgTransparentGray } from '@styles/globalStyles';
@@ -10,6 +11,7 @@ interface RangeSliderProps {
   max?: number;
   value?: number;
   showCursor?: boolean;
+  Css?: CSSInterpolation;
   onChange?: (value: number) => void;
 }
 
@@ -18,6 +20,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   max = 1000,
   value = 50,
   showCursor = false,
+  Css,
   onChange,
 }) => {
   // HTML Range input 의 값을 저장하는 변수
@@ -25,7 +28,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 
   // @emotion/react 의 css 를 불러와서 작업
   const InputRangeStyle = useMemo(() => {
-    const v = value ?? valueState;
+    const v = valueState;
     const width = `${(v / max) * 100}%`;
 
     return css`
@@ -33,7 +36,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       ${bgTransparentGray}
 
       &::before {
-        ${tw`h-1 rounded-full float-left absolute bg-white min-w-[.8%] duration-75`}
+        ${tw`h-1 rounded-full float-left absolute bg-white min-w-[.8%]`}
         z-index: -1;
         content: '';
         width: ${width};
@@ -49,10 +52,11 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         opacity: ${showCursor ? 1 : 0};
       }
     `;
-  }, [max, showCursor, value, valueState]);
+  }, [max, showCursor, valueState]);
 
   const handleValueChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
       setValueState(Number(e.target.value));
       onChange?.(Number(e.target.value));
     },
@@ -67,8 +71,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   return (
     <input
       type="range"
-      value={value ?? valueState}
-      css={InputRangeStyle}
+      value={valueState}
+      css={[InputRangeStyle, Css]}
       min={min}
       max={max}
       className="cursor-ew-resize"
