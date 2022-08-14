@@ -22,6 +22,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showLyric, setShowLyric] = useState(false);
+  const [volume, setVolume] = useState(10);
 
   const handleLyricClick = useCallback(() => {
     setShowLyric(!showLyric);
@@ -48,7 +49,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
   const handleTimeUpdate = useCallback(() => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
-      console.log('currentTime', audioRef.current.currentTime);
     }
   }, []);
 
@@ -58,20 +58,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
     }
   }, []);
 
-  const updateCurrentTime = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-      //   console.log('currentTime', audioRef.current.currentTime);
-    }
-  };
-
-  //   useEffectOnce(() => {
-  //     console.log('asdf');
-  //   });
-  //   requestAnimationFrame(updateCurrentTime);
-
   const handleAudioEnded = useCallback(() => {
     setIsPlaying(false);
+  }, []);
+
+  const handleVolumeChange = useCallback((value: number) => {
+    if (audioRef.current) {
+      audioRef.current.volume = value / 100;
+    }
   }, []);
 
   return (
@@ -109,8 +103,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
         isHover={isHover}
         isPlaying={isPlaying}
         showLyric={showLyric}
+        volume={volume}
         onLyricClick={handleLyricClick}
         onPlayClick={handlePlayClick}
+        onVolumeChange={handleVolumeChange}
         {...rest}
       />
     </div>

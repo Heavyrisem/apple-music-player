@@ -56,7 +56,6 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 
   const handleValueChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(e.target.value);
       setValueState(Number(e.target.value));
       onChange?.(Number(e.target.value));
     },

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { css } from '@emotion/react';
 import tw from 'twin.macro';
 
 import RangeSlider from '@components/RangeSlider';
@@ -26,8 +25,10 @@ interface AudioControllerProps extends MusicType {
   isHover: boolean;
   isPlaying: boolean;
   showLyric: boolean;
+  volume: number;
   onPlayClick: () => void;
   onLyricClick: () => void;
+  onVolumeChange: (value: number) => void;
 }
 
 const AudioController: React.FC<AudioControllerProps> = ({
@@ -37,15 +38,15 @@ const AudioController: React.FC<AudioControllerProps> = ({
   isHover,
   isPlaying,
   showLyric,
+  volume,
   onPlayClick,
   onLyricClick,
+  onVolumeChange,
 }) => {
-  const [audioLevel, setAudioLevel] = useState(10);
   const [showAudioController, setShowAudioController] = useState(false);
-
   return (
     <div css={tw`min-h-[3.5rem] flex flex-col`}>
-      {true ? (
+      {isHover ? (
         <div css={tw`flex justify-between my-auto`}>
           <div
             css={[
@@ -58,8 +59,8 @@ const AudioController: React.FC<AudioControllerProps> = ({
               content={
                 <RangeSlider
                   max={100}
-                  value={audioLevel}
-                  onChange={setAudioLevel}
+                  value={volume}
+                  onChange={onVolumeChange}
                   showCursor
                   Css={tw`w-[5rem]`}
                 />
