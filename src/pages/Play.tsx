@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { fromVtt } from 'subtitles-parser-vtt';
+import tw from 'twin.macro';
 
 import AudioPlayer from '@components/AudioPlayer';
 import CoverImage from '@components/CoverImage';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
-import { Lyrics } from '@types';
+import { Lyrics } from '@src/types';
 import { getMusicInfo, getMusicLyrics } from '@utils/api';
 import { MusicInfo } from '@utils/api/types';
 
@@ -21,25 +22,33 @@ const Play: React.FC = () => {
 
   const fetchMusicInfo = useCallback(async (videoId: string) => {
     const info = await getMusicInfo(videoId);
-    const lyrics = await getMusicLyrics(info.videoId).then((res) => fromVtt(res.lyrics, 's'));
+    const lyrics = await getMusicLyrics(info.videoId).then(
+      (res) => res && fromVtt(res.lyrics, 's'),
+    );
     return { info, lyrics };
+  }, []);
+
+  const handleLyricsClick = useCallback((lyrics: Lyrics) => {
+    setCurrentTime(lyrics.startTime);
   }, []);
 
   useEffect(() => {
     if (requestedVideoId) {
       fetchMusicInfo(requestedVideoId).then(({ info, lyrics }) => {
         setMusicInfo(info);
-        setMusicLyrics(lyrics);
+        if (lyrics) setMusicLyrics(lyrics);
       });
     }
   }, [fetchMusicInfo, requestedVideoId]);
 
   return (
-    <DefaultLayout>
-      {musicInfo && musicLyrics && (
-        <>
-          <CoverImage src={musicInfo.thumbnail} />
+    <DefaultLayout Css={tw`flex-row`}>
+      {musicInfo && (
+        <div css={[tw`m-auto mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
+          <CoverImage src={musicInfo.thumbnail} Css={tw`mb-[3rem]`} />
           <AudioPlayer
+            lyricsAvilable={Boolean(musicLyrics)}
+            playTime={currentTime}
             onTimeUpdate={setCurrentTime}
             onLyricsUpdate={setShowLyrics}
             src={`/music/file/${musicInfo.videoId}`}
@@ -47,12 +56,17 @@ const Play: React.FC = () => {
             artist={musicInfo.artists.join(', ')}
             album={musicInfo.album}
           />
-          {showLyrics && (
-            <div>
-              <LyricsList lyrics={musicLyrics} currentTime={currentTime} />
-            </div>
-          )}
-        </>
+        </div>
+      )}
+
+      {showLyrics && musicLyrics && (
+        <div css={tw`w-[50%] h-full flex flex-col mx-auto`}>
+          <LyricsList
+            lyricsList={musicLyrics}
+            currentTime={currentTime}
+            onLyricsClick={handleLyricsClick}
+          />
+        </div>
       )}
     </DefaultLayout>
   );

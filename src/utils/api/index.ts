@@ -21,13 +21,15 @@ export const searchMusic = (q: string, lyrics = false): Promise<MusicInfo> => {
     .then((res) => ({ ...res.data, thumbnail: highResThumbnailUrl(res.data.thumbnail) }));
 };
 
-export const getMusicLyrics = (videoId: string) => {
+export const getMusicLyrics = (videoId: string, lang = 'en') => {
   return instance
     .request<MusicLyrics>({
       method: 'GET',
       url: `/music/lyrics/${videoId}`,
+      params: { lang },
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch(() => undefined);
 };
 
 export const getMusicData = (videoId: string) => {

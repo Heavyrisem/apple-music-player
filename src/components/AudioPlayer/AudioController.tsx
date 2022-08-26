@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import tw from 'twin.macro';
 
@@ -10,8 +10,8 @@ import PlayIcon from '@components/icons/PlayIcon';
 import QuoteBubbleIcon from '@components/icons/QuoteBubbleIcon';
 import Tooltip from '@components/icons/Tooltip';
 import VolumeIcon from '@components/icons/VolumeIcon';
+import { MusicType } from '@src/types';
 import { variables } from '@styles/globalStyles';
-import { MusicType } from '@types';
 
 import {
   SmallControlIconStyle,
@@ -24,7 +24,8 @@ import {
 interface AudioControllerProps extends MusicType {
   isHover: boolean;
   isPlaying: boolean;
-  showLyric: boolean;
+  showLyrics: boolean;
+  lyricsAvilable: boolean;
   volume: number;
   onPlayClick: () => void;
   onLyricClick: () => void;
@@ -37,13 +38,21 @@ const AudioController: React.FC<AudioControllerProps> = ({
   album,
   isHover,
   isPlaying,
-  showLyric,
+  showLyrics,
+  lyricsAvilable,
   volume,
   onPlayClick,
   onLyricClick,
   onVolumeChange,
 }) => {
   const [showAudioController, setShowAudioController] = useState(false);
+
+  useEffect(() => {
+    if (!isHover) {
+      setShowAudioController(false);
+    }
+  }, [isHover]);
+
   return (
     <div css={tw`min-h-[3.5rem] flex flex-col`}>
       {isHover ? (
@@ -104,7 +113,8 @@ const AudioController: React.FC<AudioControllerProps> = ({
           <div
             css={[
               SmallControlIconStyle,
-              showLyric && [ActivatedControlIconStyle, ActivatedHoverControlIconStyle],
+              showLyrics && [ActivatedControlIconStyle, ActivatedHoverControlIconStyle],
+              lyricsAvilable === false && tw`invisible`,
             ]}
             onClick={onLyricClick}
           >

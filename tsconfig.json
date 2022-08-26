@@ -23,8 +23,7 @@
     "jsxImportSource": "@emotion/react"
   },
   "include": [
-    "src",
-    "types"
+    "src"
   ],
   "references": [
     {

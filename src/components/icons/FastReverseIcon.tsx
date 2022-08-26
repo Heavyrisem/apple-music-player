@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IconBaseProps } from 'types/BaseTypes';
+import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface FastReverseIconProps extends IconBaseProps {}
 

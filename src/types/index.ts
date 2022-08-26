@@ -5,6 +5,7 @@ export interface MusicType {
 }
 
 export interface Lyrics {
+  id: number;
   startTime: number;
   endTime: number;
   text: string;

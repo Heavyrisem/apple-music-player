@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import tw from 'twin.macro';
-import { MusicType } from 'types';
 
 import RangeSlider from '@components/RangeSlider';
+import { MusicType } from '@src/types';
 import { prettySeconds } from '@src/utils/time';
 import { textTransparentGray } from '@styles/globalStyles';
 
@@ -11,6 +11,8 @@ import AudioController from './AudioController';
 
 export interface AudioPlayerProps extends MusicType {
   src: string;
+  lyricsAvilable: boolean;
+  playTime?: number;
   onPlayStateChange?: (isPlaying: boolean) => void;
   onTimeUpdate?: (currentTime: number) => void;
   onVolumeChange?: (value: number) => void;
@@ -19,6 +21,8 @@ export interface AudioPlayerProps extends MusicType {
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
   src,
+  lyricsAvilable,
+  playTime,
   onPlayStateChange,
   onTimeUpdate,
   onVolumeChange,
@@ -93,6 +97,15 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (playTime !== undefined && audioRef.current) {
+      // 만약 부모 컴포넌트에서 임의로 변경한 시간이 현재 오디오 플레이어의 시간과 1.5초 이상 차이나면, 부모 컴포넌트가 내려 준 값을 오버라이드
+      if (Math.abs(audioRef.current.currentTime - playTime) >= 1.5)
+        audioRef.current.currentTime = playTime;
+      setCurrentTime(playTime);
+    }
+  }, [playTime]);
+
   return (
     <div
       css={[tw`w-[35rem]`, textTransparentGray]}
@@ -127,7 +140,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       <AudioController
         isHover={isHover}
         isPlaying={isPlaying}
-        showLyric={showLyric}
+        showLyrics={showLyric}
+        lyricsAvilable={lyricsAvilable}
         volume={volume}
         onLyricClick={handleLyricClick}
         onPlayClick={handlePlayClick}

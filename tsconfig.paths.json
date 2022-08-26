@@ -9,7 +9,7 @@
                 "types"
             ],
             "@types/*": [
-                "types/*"
+                "src/types/*"
             ],
             "@utils/*": [
                 "src/utils/*"

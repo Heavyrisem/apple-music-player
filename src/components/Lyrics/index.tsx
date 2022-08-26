@@ -1,29 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Lyrics } from '@types';
+import tw from 'twin.macro';
+
+import { Lyrics } from '@src/types';
+import { hideScrollbar } from '@styles/globalStyles';
+import { replaceAll } from '@utils/string';
+
+import { FILTER_CHARACTERS } from './constant';
 
 interface LyricsProps {
   currentTime: number;
-  lyrics: Lyrics[];
+  lyricsList: Lyrics[];
+  onLyricsClick?: (lryics: Lyrics) => void;
 }
 
-const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyrics }) => {
-  const [currentLyrics, setCurrentLyrics] = useState<Lyrics[] | undefined>(undefined);
+const ActivatedLyricsStyle = tw`text-white`;
+
+const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsClick }) => {
+  const activatedElement = useRef<HTMLDivElement>(null);
+  const [prevLyrics, setPrevLyrics] = useState<Lyrics | undefined>(undefined);
+
+  const isActiveLyrics = useCallback(
+    (lyrics: Lyrics) => currentTime >= lyrics.startTime && currentTime <= lyrics.endTime,
+    [currentTime],
+  );
 
   useEffect(() => {
-    const time = currentTime;
-    const temp = lyrics.filter((lyric) => time >= lyric.startTime && time <= lyric.endTime);
-    console.log('time', time, temp);
-    setCurrentLyrics(temp);
-  }, [currentTime, lyrics]);
+    const currentLyrics = lyricsList.find(isActiveLyrics);
+    if (currentLyrics && activatedElement.current) {
+      if (prevLyrics?.startTime !== currentLyrics.startTime) {
+        activatedElement.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setPrevLyrics(currentLyrics);
+  }, [currentTime, isActiveLyrics, lyricsList, prevLyrics]);
 
-  return currentLyrics ? (
-    <div className="lyrics">
-      {currentLyrics.map((lyric, index) => (
-        <div key={lyric.text}>{lyric.text}</div>
-      ))}
+  return (
+    <div
+      css={[
+        tw`text-[#ffffff28] max-h-[40%] font-bold text-5xl overflow-y-scroll leading-relaxed m-auto`,
+        hideScrollbar,
+      ]}
+    >
+      {lyricsList.map((lyrics) => {
+        const isActive = isActiveLyrics(lyrics);
+
+        return (
+          <div
+            key={lyrics.id}
+            css={[
+              tw`duration-200 cursor-pointer hover:text-[#ffffff54]`,
+              isActive && [ActivatedLyricsStyle, tw`hover:text-white`],
+            ]}
+            onClick={() => onLyricsClick?.(lyrics)}
+            ref={isActive ? activatedElement : undefined}
+          >
+            {replaceAll(lyrics.text, FILTER_CHARACTERS, '')}
+          </div>
+        );
+      })}
     </div>
-  ) : null;
+  );
 };
 
 export default LyricsList;
