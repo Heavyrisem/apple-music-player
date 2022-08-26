@@ -3,3 +3,9 @@ export interface MusicType {
   artist: string;
   album?: string;
 }
+
+export interface Lyrics {
+  startTime: number;
+  endTime: number;
+  text: string;
+}

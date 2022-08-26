@@ -1,10 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import tw from 'twin.macro';
 import { MusicType } from 'types';
 
 import RangeSlider from '@components/RangeSlider';
-import useEffectOnce from '@hooks/useEffectOnce';
 import { prettySeconds } from '@src/utils/time';
 import { textTransparentGray } from '@styles/globalStyles';
 
@@ -12,9 +11,20 @@ import AudioController from './AudioController';
 
 export interface AudioPlayerProps extends MusicType {
   src: string;
+  onPlayStateChange?: (isPlaying: boolean) => void;
+  onTimeUpdate?: (currentTime: number) => void;
+  onVolumeChange?: (value: number) => void;
+  onLyricsUpdate?: (state: boolean) => void;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({
+  src,
+  onPlayStateChange,
+  onTimeUpdate,
+  onVolumeChange,
+  onLyricsUpdate,
+  ...rest
+}) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [isHover, setIsHover] = useState(false);
@@ -22,35 +32,49 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showLyric, setShowLyric] = useState(false);
-  const [volume, setVolume] = useState(10);
+  const [volume, setVolume] = useState(20);
+
+  const updateTime = useCallback(
+    (value: number) => {
+      setCurrentTime(value);
+      onTimeUpdate?.(value);
+    },
+    [onTimeUpdate],
+  );
 
   const handleLyricClick = useCallback(() => {
     setShowLyric(!showLyric);
-  }, [showLyric]);
+    onLyricsUpdate?.(!showLyric);
+  }, [onLyricsUpdate, showLyric]);
 
   const handlePlayClick = useCallback(() => {
-    if (audioRef.current) audioRef.current.volume = 0.1;
+    if (audioRef.current) audioRef.current.volume = volume / 100;
 
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
       audioRef.current?.play();
     }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying]);
 
-  const handleSliderChange = useCallback((value: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = value;
-      setCurrentTime(value);
-    }
-  }, []);
+    setIsPlaying(!isPlaying);
+    onPlayStateChange?.(!isPlaying);
+  }, [isPlaying, onPlayStateChange, volume]);
+
+  const handleSliderChange = useCallback(
+    (value: number) => {
+      if (audioRef.current) {
+        updateTime(value);
+        audioRef.current.currentTime = value;
+      }
+    },
+    [updateTime],
+  );
 
   const handleTimeUpdate = useCallback(() => {
     if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
+      updateTime(audioRef.current.currentTime);
     }
-  }, []);
+  }, [updateTime]);
 
   const handleMetadataLoaded = useCallback(() => {
     if (audioRef.current) {
@@ -64,6 +88,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
 
   const handleVolumeChange = useCallback((value: number) => {
     if (audioRef.current) {
+      setVolume(value);
       audioRef.current.volume = value / 100;
     }
   }, []);
@@ -78,7 +103,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, ...rest }) => {
         css={[tw`hidden`]}
         ref={audioRef}
         onLoadedMetadata={handleMetadataLoaded}
-        onTimeUpdate={handleTimeUpdate}
+        onTimeUpdateCapture={handleTimeUpdate}
         onEnded={handleAudioEnded}
         controls
       >

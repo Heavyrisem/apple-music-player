@@ -37,4 +37,17 @@ export default defineConfig({
       { find: '@utils', replacement: 'src/utils' },
     ],
   },
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' },
+  },
+  server: {
+    proxy: {
+      '/music': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+    },
+  },
 });
