@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { css } from '@emotion/react';
 import tw from 'twin.macro';
 
 import RangeSlider from '@components/RangeSlider';
-import ExplicitIcon from '@components/icons/ExplicitIcon';
 import { MusicType } from '@src/types';
 import { prettySeconds } from '@src/utils/time';
-import { bgTransparentGray, textTransparentGray, variables } from '@styles/globalStyles';
+import { textTransparentGray } from '@styles/globalStyles';
 
 import AudioController from './AudioController';
 

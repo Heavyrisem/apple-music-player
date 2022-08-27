@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { css } from '@emotion/react';
 import { fromVtt } from 'subtitles-parser-vtt';
 import tw from 'twin.macro';
 
 import AudioPlayer from '@components/AudioPlayer';
 import CoverImage from '@components/CoverImage';
+import GradientCanvas from '@components/GradientCanvas';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
 import { Lyrics } from '@src/types';
@@ -42,7 +44,22 @@ const Play: React.FC = () => {
   }, [fetchMusicInfo, requestedVideoId]);
 
   return (
-    <DefaultLayout Css={tw`flex-row`}>
+    <DefaultLayout Css={[tw`flex-row`]}>
+      <GradientCanvas
+        colors={[
+          { r: 99, g: 227, b: 214 },
+          { r: 242, g: 69, b: 167 },
+          { r: 252, g: 118, b: 74 },
+        ]}
+        fps={144}
+        Css={[
+          tw`absolute`,
+          css`
+            background: rgb(172, 225, 241);
+            z-index: -1;
+          `,
+        ]}
+      />
       {musicInfo && (
         <div css={[tw`m-auto mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
           <CoverImage src={musicInfo.thumbnail} Css={tw`mb-[3rem]`} />

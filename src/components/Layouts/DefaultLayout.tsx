@@ -10,7 +10,7 @@ interface DefaultLayoutProps extends ComponentBaseProps {
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children, Css }) => {
   return (
-    <div css={[tw`flex h-screen flex-col items-center justify-around bg-[rgb(130 37 137)]`, Css]}>
+    <div css={[tw`flex h-screen flex-col items-center justify-around w-screen`, Css]}>
       {children}
     </div>
   );

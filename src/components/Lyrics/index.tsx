@@ -38,7 +38,7 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
   return (
     <div
       css={[
-        tw`text-[#ffffff28] max-h-[40%] font-bold text-5xl overflow-y-scroll leading-relaxed m-auto`,
+        tw`text-[#ffffff72] max-h-[40%] font-bold text-5xl overflow-y-scroll leading-relaxed m-auto`,
         hideScrollbar,
       ]}
     >
@@ -49,7 +49,7 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
           <div
             key={lyrics.id}
             css={[
-              tw`duration-200 cursor-pointer hover:text-[#ffffff54]`,
+              tw`duration-200 cursor-pointer hover:text-[#ffffffa8]`,
               isActive && [ActivatedLyricsStyle, tw`hover:text-white`],
             ]}
             onClick={() => onLyricsClick?.(lyrics)}
