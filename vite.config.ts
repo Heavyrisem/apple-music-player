@@ -33,7 +33,6 @@ export default defineConfig({
       { find: '@hooks', replacement: 'src/hooks' },
       { find: '@styles', replacement: 'src/styles' },
       { find: '@assets', replacement: 'src/assets' },
-      { find: '@types', replacement: 'src/types' },
       { find: '@utils', replacement: 'src/utils' },
     ],
   },

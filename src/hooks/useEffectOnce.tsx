@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { EffectCallback, useEffect } from 'react';
 
-const useEffectOnce = (effect: () => void) => {
-  const [hasRun, setHasRun] = useState(false);
-  useEffect(() => {
-    if (!hasRun) {
-      effect();
-      setHasRun(true);
-    }
-  }, [effect, hasRun]);
+const useEffectOnce = (effect: EffectCallback) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(effect, []);
 };
 
 export default useEffectOnce;

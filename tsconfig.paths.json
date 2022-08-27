@@ -5,12 +5,6 @@
             "@pages/*": [
                 "src/pages/*"
             ],
-            "@types": [
-                "types"
-            ],
-            "@types/*": [
-                "src/types/*"
-            ],
             "@utils/*": [
                 "src/utils/*"
             ],

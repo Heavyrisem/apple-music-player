@@ -1,17 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { css } from '@emotion/react';
 import tw from 'twin.macro';
 
 import RangeSlider from '@components/RangeSlider';
+import ExplicitIcon from '@components/icons/ExplicitIcon';
 import { MusicType } from '@src/types';
 import { prettySeconds } from '@src/utils/time';
-import { textTransparentGray } from '@styles/globalStyles';
+import { bgTransparentGray, textTransparentGray, variables } from '@styles/globalStyles';
 
 import AudioController from './AudioController';
 
 export interface AudioPlayerProps extends MusicType {
   src: string;
   lyricsAvilable: boolean;
+  isExplicit: boolean;
   playTime?: number;
   onPlayStateChange?: (isPlaying: boolean) => void;
   onTimeUpdate?: (currentTime: number) => void;
@@ -22,6 +25,7 @@ export interface AudioPlayerProps extends MusicType {
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
   src,
   lyricsAvilable,
+  isExplicit,
   playTime,
   onPlayStateChange,
   onTimeUpdate,
@@ -125,6 +129,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
       <div css={tw`flex justify-between text-xs font-semibold`}>
         <span>{prettySeconds(currentTime)}</span>
+        {isExplicit && <span css={tw`text-[0.5rem] mb-0`}>Explicit</span>}
         <span>{prettySeconds(duration)}</span>
       </div>
 

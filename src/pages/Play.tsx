@@ -47,6 +47,7 @@ const Play: React.FC = () => {
         <div css={[tw`m-auto mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
           <CoverImage src={musicInfo.thumbnail} Css={tw`mb-[3rem]`} />
           <AudioPlayer
+            isExplicit={musicInfo.isExplicit}
             lyricsAvilable={Boolean(musicLyrics)}
             playTime={currentTime}
             onTimeUpdate={setCurrentTime}
