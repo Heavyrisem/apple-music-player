@@ -28,8 +28,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 
   // @emotion/react 의 css 를 불러와서 작업
   const InputRangeStyle = useMemo(() => {
-    const v = valueState;
-    const width = `${(v / max) * 99.9}%`;
+    const v = Math.floor(valueState);
+    const width = `${(v / max) * 100}%`;
 
     return css`
       ${tw`appearance-none w-full rounded-full outline-none border-none opacity-95 relative h-1`}
