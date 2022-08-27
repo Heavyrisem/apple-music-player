@@ -84,7 +84,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
   const handleMetadataLoaded = useCallback(() => {
     if (audioRef.current) {
-      setDuration(audioRef.current.duration);
+      setDuration(Math.round(audioRef.current.duration));
     }
   }, []);
 
