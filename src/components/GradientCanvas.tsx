@@ -10,6 +10,7 @@ interface GradientCanvasProps extends ComponentBaseProps {
   colors: { r: number; g: number; b: number }[];
   fps?: number;
   particleNumber?: number;
+  speed?: number;
 }
 
 interface ParticleData {
@@ -30,6 +31,7 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
   colors,
   fps = 24,
   particleNumber = 10,
+  speed = 1,
   Css,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -140,8 +142,8 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
           y: Math.random() * canvas.height,
         },
         vector: {
-          x: Math.random() * (randomBool() ? 1 : -1) * 3,
-          y: Math.random() * (randomBool() ? 1 : -1) * 3,
+          x: Math.random() * (randomBool() ? 1 : -1) * speed,
+          y: Math.random() * (randomBool() ? 1 : -1) * speed,
           size: randomRange(0, 1),
         },
         size: Math.random() * (maxSize - minSize) + minSize,
@@ -159,7 +161,7 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
         window.cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [animate, colors, particleNumber]);
+  }, [animate, colors, particleNumber, speed]);
 
   useEffectOnce(inialize);
 
