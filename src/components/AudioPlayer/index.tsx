@@ -110,7 +110,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
   return (
     <div
-      css={[tw`w-[35rem]`, textTransparentGray]}
+      css={[tw`w-full`, textTransparentGray]}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >

@@ -119,7 +119,7 @@ const AudioController: React.FC<AudioControllerProps> = ({
           </div>
         </div>
       ) : (
-        <div css={[tw`text-center duration-200 break-normal`, ControllerAppearAnimation]}>
+        <div css={[tw`text-center break-normal`, ControllerAppearAnimation]}>
           <div css={tw`text-xl font-bold text-white`}>{title}</div>
           <div css={tw`text-xl`}>{album ? `${artist} — ${album}` : artist}</div>
         </div>

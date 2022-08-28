@@ -61,8 +61,11 @@ const Play: React.FC = () => {
         ]}
       />
       {musicInfo && (
-        <div css={[tw`m-auto mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
-          <CoverImage src={musicInfo.thumbnail} Css={tw`mb-[3rem]`} />
+        <div css={[tw`m-auto min-w-[35rem] mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
+          <CoverImage
+            src={musicInfo.thumbnail}
+            Css={[tw`mb-[3rem]`, !showLyrics && tw`w-[40rem]`]}
+          />
           <AudioPlayer
             isExplicit={musicInfo.isExplicit}
             lyricsAvilable={Boolean(musicLyrics)}

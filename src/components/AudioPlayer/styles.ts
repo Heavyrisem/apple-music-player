@@ -29,7 +29,7 @@ const ControllerAppearAnimation = css`
       ${tw`opacity-100`}
     }
   }
-  animation: appear 0.25s linear;
+  animation: appear 0.75s ease-out;
 `;
 
 export {
