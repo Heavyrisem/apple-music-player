@@ -51,7 +51,8 @@ const Play: React.FC = () => {
           { r: 242, g: 69, b: 167 },
           { r: 252, g: 118, b: 74 },
         ]}
-        fps={144}
+        fps={60}
+        speed={0.1}
         Css={[
           tw`absolute`,
           css`

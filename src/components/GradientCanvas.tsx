@@ -86,11 +86,11 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
     if (delta > renderInterval) {
       const animatedParticles = particles.map((particle) => {
         const newParticle = particle;
-        newParticle.vector.size += 0.02;
+        newParticle.vector.size += (0.02 * delta) / 27;
         newParticle.size += Math.sin(newParticle.vector.size);
 
-        newParticle.pos.x += particle.vector.x;
-        newParticle.pos.y += particle.vector.y;
+        newParticle.pos.x += (particle.vector.x / 2) * delta;
+        newParticle.pos.y += (particle.vector.y / 2) * delta;
 
         if (newParticle.pos.x < canvas.width - canvas.width * 1.5) {
           newParticle.vector.x *= -1;
