@@ -32,6 +32,7 @@ interface ParticleData {
   };
 }
 
+// FIXME: 브라우저가 Focus를 잃은 상태로 시간이 흐르면, Canvas가 빈 상태로 멈춤
 const GradientCanvas: React.FC<GradientCanvasProps> = ({
   colors = [
     { r: 99, g: 227, b: 214 },
