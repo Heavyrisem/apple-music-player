@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { css } from '@emotion/react';
+import { usePalette } from 'color-thief-react';
 import { fromVtt } from 'subtitles-parser-vtt';
 import tw from 'twin.macro';
 
 import AudioPlayer from '@components/AudioPlayer';
 import CoverImage from '@components/CoverImage';
-import GradientCanvas from '@components/GradientCanvas';
+import GradientCanvas, { Color } from '@components/GradientCanvas';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
 import { Lyrics } from '@src/types';
@@ -16,17 +17,34 @@ import { MusicInfo } from '@utils/api/types';
 
 const Play: React.FC = () => {
   const { videoId: requestedVideoId } = useParams();
+
   const [musicInfo, setMusicInfo] = useState<MusicInfo | null>(null);
   const [musicLyrics, setMusicLyrics] = useState<Lyrics[] | null>(null);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [showLyrics, setShowLyrics] = useState(false);
+  const [colors, setColors] = useState<Color[]>();
+  const { data: colorPalette } = usePalette(musicInfo?.thumbnail || '', 10, 'rgbArray', {
+    crossOrigin: 'https://lh3.googleusercontent.com',
+    quality: 1,
+  });
+
+  useEffect(() => {
+    if (colorPalette) {
+      const tempColors: Color[] = colorPalette.map((color) => {
+        return { r: color[0], g: color[1], b: color[2] };
+      });
+
+      setColors(tempColors);
+    }
+  }, [colorPalette]);
 
   const fetchMusicInfo = useCallback(async (videoId: string) => {
     const info = await getMusicInfo(videoId);
-    const lyrics = await getMusicLyrics(info.videoId).then(
-      (res) => res && fromVtt(res.lyrics, 's'),
-    );
+    const lyrics = await getMusicLyrics(info.videoId)
+      .then((res) => res && fromVtt(res.lyrics, 's'))
+      .then((result) => result?.sort((a, b) => a.startTime - b.startTime))
+      .then((result) => result?.map((l, idx) => ({ ...l, id: idx })));
     return { info, lyrics };
   }, []);
 
@@ -43,24 +61,29 @@ const Play: React.FC = () => {
     }
   }, [fetchMusicInfo, requestedVideoId]);
 
-  return (
-    <DefaultLayout Css={[tw`flex-row`]}>
+  const Grandient = useMemo(() => {
+    if (!colors) return null;
+
+    return (
       <GradientCanvas
-        colors={[
-          { r: 99, g: 227, b: 214 },
-          { r: 242, g: 69, b: 167 },
-          { r: 252, g: 118, b: 74 },
-        ]}
-        fps={60}
+        colors={colors.slice(1, colors.length)}
+        fps={45}
         speed={0.1}
+        // particleNumber={1}
         Css={[
           tw`absolute`,
           css`
-            background: rgb(172, 225, 241);
+            background: rgb(${colors[0].r} ${colors[0].g} ${colors[0].b});
             z-index: -1;
           `,
         ]}
       />
+    );
+  }, [colors]);
+
+  return (
+    <DefaultLayout Css={[tw`flex-row`]}>
+      {Grandient}
       {musicInfo && (
         <div css={[tw`m-auto min-w-[35rem] mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
           <CoverImage

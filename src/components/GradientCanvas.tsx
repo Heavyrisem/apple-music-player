@@ -6,8 +6,13 @@ import useEffectOnce from '@hooks/useEffectOnce';
 import { ComponentBaseProps } from '@src/types/BaseTypes';
 import { randomBool, randomRange } from '@utils/index';
 
+export interface Color {
+  r: number;
+  g: number;
+  b: number;
+}
 interface GradientCanvasProps extends ComponentBaseProps {
-  colors: { r: number; g: number; b: number }[];
+  colors: Color[];
   fps?: number;
   particleNumber?: number;
   speed?: number;
@@ -28,7 +33,11 @@ interface ParticleData {
 }
 
 const GradientCanvas: React.FC<GradientCanvasProps> = ({
-  colors,
+  colors = [
+    { r: 99, g: 227, b: 214 },
+    { r: 242, g: 69, b: 167 },
+    { r: 252, g: 118, b: 74 },
+  ],
   fps = 24,
   particleNumber = 10,
   speed = 1,
@@ -115,9 +124,17 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
     return undefined;
   }, [render, renderInterval]);
 
+  const dystroy = useCallback(() => {
+    if (requestRef.current) {
+      // console.log('DYSTROYED');
+      window.cancelAnimationFrame(requestRef.current);
+    }
+  }, []);
+
   const inialize = useCallback(() => {
     const { current: canvas } = canvasRef;
     if (!canvas) return undefined;
+    // console.log('INITALIZE', colors);
 
     // const pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
     const pixelRatio = 1;
@@ -155,14 +172,14 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
     particlesRef.current = tempParticles;
     renderTimeRef.current = Date.now();
     requestRef.current = window.requestAnimationFrame(animate);
-    return () => {
-      if (requestRef.current) {
-        // console.log('ANIMATION END');
-        window.cancelAnimationFrame(requestRef.current);
-      }
-    };
-  }, [animate, colors, particleNumber, speed]);
 
+    return dystroy;
+  }, [animate, colors, dystroy, particleNumber, speed]);
+
+  useEffect(() => {
+    dystroy();
+    inialize();
+  }, [dystroy, inialize]);
   useEffectOnce(inialize);
 
   // useEffect(() => {
