@@ -83,35 +83,39 @@ const Play: React.FC = () => {
 
   return (
     <DefaultLayout Css={[tw`flex-row`]}>
-      {Grandient}
       {musicInfo && (
-        <div css={[tw`m-auto min-w-[35rem] mb-[5rem] inline-block`, showLyrics && tw`ml-[12%]`]}>
-          <CoverImage
-            src={musicInfo.thumbnail}
-            Css={[tw`mb-[3rem]`, !showLyrics && tw`w-[40rem]`]}
-          />
-          <AudioPlayer
-            isExplicit={musicInfo.isExplicit}
-            lyricsAvilable={Boolean(musicLyrics)}
-            playTime={currentTime}
-            onTimeUpdate={setCurrentTime}
-            onLyricsUpdate={setShowLyrics}
-            src={`/music/file/${musicInfo.videoId}`}
-            title={musicInfo.title}
-            artist={musicInfo.artists.join(', ')}
-            album={musicInfo.album}
-          />
-        </div>
-      )}
-
-      {showLyrics && musicLyrics && (
-        <div css={tw`w-[50%] h-full flex flex-col mx-auto`}>
-          <LyricsList
-            lyricsList={musicLyrics}
-            currentTime={currentTime}
-            onLyricsClick={handleLyricsClick}
-          />
-        </div>
+        <>
+          {Grandient}
+          <div
+            css={[tw`m-auto min-w-[35rem] mb-[5rem] inline-block`, showLyrics && tw`ml-[12rem]`]}
+          >
+            <CoverImage
+              src={musicInfo.thumbnail}
+              Css={[tw`mb-[3rem]`, !showLyrics && tw`w-[40rem]`]}
+            />
+            <AudioPlayer
+              isExplicit={musicInfo.isExplicit}
+              lyricsAvilable={Boolean(musicLyrics)}
+              playTime={currentTime}
+              onTimeUpdate={setCurrentTime}
+              onLyricsUpdate={setShowLyrics}
+              src={`/music/file/${musicInfo.videoId}`}
+              title={musicInfo.title}
+              artist={musicInfo.artists.join(', ')}
+              album={musicInfo.album}
+            />
+          </div>
+          {showLyrics && musicLyrics && (
+            <div css={tw`w-[50%] h-full flex flex-col mx-auto`}>
+              <LyricsList
+                lyricsList={musicLyrics}
+                currentTime={currentTime}
+                onLyricsClick={handleLyricsClick}
+                Css={tw`w-full`}
+              />
+            </div>
+          )}
+        </>
       )}
     </DefaultLayout>
   );

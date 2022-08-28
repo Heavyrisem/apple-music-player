@@ -3,12 +3,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import tw from 'twin.macro';
 
 import { Lyrics } from '@src/types';
+import { ComponentBaseProps } from '@src/types/BaseTypes';
 import { hideScrollbar } from '@styles/globalStyles';
 import { replaceAll } from '@utils/string';
 
 import { FILTER_CHARACTERS } from './constant';
 
-interface LyricsProps {
+interface LyricsProps extends ComponentBaseProps {
   currentTime: number;
   lyricsList: Lyrics[];
   onLyricsClick?: (lryics: Lyrics) => void;
@@ -16,7 +17,7 @@ interface LyricsProps {
 
 const ActiveLyricsStyle = tw`text-white`;
 
-const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsClick }) => {
+const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsClick, Css }) => {
   const activeElement = useRef<HTMLDivElement>(null);
   const [prevLyrics, setPrevLyrics] = useState<Lyrics>();
 
@@ -40,6 +41,7 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
       css={[
         tw`text-[#ffffff72] max-h-[40%] font-bold text-5xl overflow-y-scroll leading-relaxed m-auto`,
         hideScrollbar,
+        Css,
       ]}
     >
       {lyricsList.map((lyrics) => {
