@@ -85,10 +85,7 @@ const AudioController: React.FC<AudioControllerProps> = ({
 
           <span css={tw`flex`}>
             <span css={ControlIconStyle}>
-              <FastReverseIcon
-                fillColor={variables.transparentGray}
-                Css={tw`m-auto text-gray-300`}
-              />
+              <FastReverseIcon fillColor={variables.transparentGray} Css={tw`m-auto`} />
             </span>
 
             <span css={ControlIconStyle} onClick={onPlayClick}>

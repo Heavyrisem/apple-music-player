@@ -8,7 +8,7 @@ const IconStyle = [
     transition-duration: '0.5s';
   `,
 ];
-const HoverTransParentStyle = tw`hover:bg-white hover:bg-opacity-5`;
+const HoverTransParentStyle = tw`hover:bg-white hover:bg-opacity-20`;
 
 const ControlIconStyle = [tw`w-[2rem] h-[1.75rem] mx-[1px]`, IconStyle, HoverTransParentStyle];
 const SmallControlIconStyle = [
@@ -17,8 +17,8 @@ const SmallControlIconStyle = [
   HoverTransParentStyle,
 ];
 
-const ActivatedControlIconStyle = tw`bg-white bg-opacity-5`;
-const ActivatedHoverControlIconStyle = tw`hover:bg-opacity-10`;
+const ActivatedControlIconStyle = tw`bg-white bg-opacity-30`;
+const ActivatedHoverControlIconStyle = tw`hover:bg-opacity-40`;
 
 const ControllerAppearAnimation = css`
   @keyframes appear {

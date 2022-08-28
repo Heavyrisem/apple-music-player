@@ -74,7 +74,6 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       css={[InputRangeStyle, Css]}
       min={min}
       max={max}
-      className="cursor-ew-resize"
       onChange={handleValueChange}
     />
   );

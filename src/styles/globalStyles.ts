@@ -1,10 +1,10 @@
 import tw, { css } from 'twin.macro';
 
-const textTransparentGray = tw`text-gray-100 text-opacity-50`;
-const bgTransparentGray = tw`bg-gray-100 bg-opacity-50`;
+const textTransparentGray = tw`text-white text-opacity-50`;
+const bgTransparentGray = tw`bg-white bg-opacity-50`;
 
 const variables = {
-  transparentGray: `rgba(243 244 246 / 0.5)`,
+  transparentGray: `rgba(255 255 255 / 0.7)`,
 };
 
 const hideScrollbar = css`
