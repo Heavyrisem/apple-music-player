@@ -14,7 +14,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ src, Css }) => {
       src={src}
       alt="Music Cover"
       className="aspect-square"
-      css={[tw`w-[35rem] rounded-xl`, Css]}
+      css={[tw`w-[35rem] rounded-xl border-white border border-opacity-10`, Css]}
     />
   );
 };

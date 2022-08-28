@@ -49,7 +49,7 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
           <div
             key={lyrics.id}
             css={[
-              tw`duration-200 cursor-pointer hover:text-[#ffffffa8]`,
+              tw`duration-200 cursor-pointer hover:text-[#ffffffa8] whitespace-pre-wrap`,
               isActive && [ActivatedLyricsStyle, tw`hover:text-white`],
             ]}
             onClick={() => onLyricsClick?.(lyrics)}
