@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { MusicInfo, MusicLyrics } from './types';
+import { MusicInfo, MusicLyrics, VideoInfo } from './types';
 
 const instance = axios.create({});
 
@@ -48,4 +48,14 @@ export const getMusicInfo = (videoId: string): Promise<MusicInfo> => {
       url: `/music/${videoId}`,
     })
     .then((res) => ({ ...res.data, thumbnail: highResThumbnailUrl(res.data.thumbnail) }));
+};
+
+export const searchVideos = (q: string, lyrics = false): Promise<VideoInfo[]> => {
+  return instance
+    .request<VideoInfo[]>({
+      method: 'GET',
+      url: `/music/video/search`,
+      params: { q, lyrics },
+    })
+    .then((res) => res.data);
 };
