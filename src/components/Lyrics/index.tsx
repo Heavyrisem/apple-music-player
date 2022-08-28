@@ -14,11 +14,11 @@ interface LyricsProps {
   onLyricsClick?: (lryics: Lyrics) => void;
 }
 
-const ActivatedLyricsStyle = tw`text-white`;
+const ActiveLyricsStyle = tw`text-white`;
 
 const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsClick }) => {
-  const activatedElement = useRef<HTMLDivElement>(null);
-  const [prevLyrics, setPrevLyrics] = useState<Lyrics | undefined>(undefined);
+  const activeElement = useRef<HTMLDivElement>(null);
+  const [prevLyrics, setPrevLyrics] = useState<Lyrics>();
 
   const isActiveLyrics = useCallback(
     (lyrics: Lyrics) => currentTime >= lyrics.startTime && currentTime <= lyrics.endTime,
@@ -27,9 +27,9 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
 
   useEffect(() => {
     const currentLyrics = lyricsList.find(isActiveLyrics);
-    if (currentLyrics && activatedElement.current) {
+    if (currentLyrics && activeElement.current) {
       if (prevLyrics?.startTime !== currentLyrics.startTime) {
-        activatedElement.current.scrollIntoView({ behavior: 'smooth' });
+        activeElement.current.scrollIntoView({ behavior: 'smooth' });
       }
     }
     setPrevLyrics(currentLyrics);
@@ -43,17 +43,21 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
       ]}
     >
       {lyricsList.map((lyrics) => {
-        const isActive = isActiveLyrics(lyrics);
+        const activeLyrics = lyricsList.filter(isActiveLyrics);
+        const isActive = lyricsList.filter(isActiveLyrics)[0]?.id === lyrics.id;
 
         return (
           <div
             key={lyrics.id}
             css={[
               tw`duration-200 cursor-pointer hover:text-[#ffffffa8] whitespace-pre-wrap`,
-              isActive && [ActivatedLyricsStyle, tw`hover:text-white`],
+              activeLyrics.filter((aLyrics) => aLyrics.id === lyrics.id).length && [
+                ActiveLyricsStyle,
+                tw`hover:text-white`,
+              ],
             ]}
             onClick={() => onLyricsClick?.(lyrics)}
-            ref={isActive ? activatedElement : undefined}
+            ref={isActive ? activeElement : undefined}
           >
             {replaceAll(lyrics.text, FILTER_CHARACTERS, '')}
           </div>
