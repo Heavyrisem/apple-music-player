@@ -21,7 +21,7 @@ export const searchMusic = (q: string, lyrics = false): Promise<MusicInfo> => {
     .then((res) => ({ ...res.data, thumbnail: highResThumbnailUrl(res.data.thumbnail) }));
 };
 
-export const getMusicLyrics = (videoId: string, lang = ['en', 'en-GB', 'ko']) => {
+export const getMusicLyrics = (videoId: string, lang = ['ko', 'en', 'en-US', 'en-GB']) => {
   return instance
     .request<MusicLyrics>({
       method: 'GET',

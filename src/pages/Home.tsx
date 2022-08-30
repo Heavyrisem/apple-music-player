@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   const [videoList, setVideoList] = useState<VideoInfo[]>([]);
 
   const handleSearch = useCallback((q: string) => {
-    searchVideos(q, true).then(setVideoList);
+    searchVideos(q).then(setVideoList);
   }, []);
 
   const handleClickResult = useCallback((video: VideoInfo) => {
