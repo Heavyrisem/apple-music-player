@@ -120,6 +120,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         onLoadedMetadata={handleMetadataLoaded}
         onTimeUpdateCapture={handleTimeUpdate}
         onEnded={handleAudioEnded}
+        onError={() => alert('음악 컨텐츠 불러오기에 실패했습니다.')}
         controls
       >
         <source src={src} />

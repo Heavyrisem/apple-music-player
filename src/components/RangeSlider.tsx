@@ -1,17 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { css } from '@emotion/react';
-import { CSSInterpolation } from '@emotion/serialize';
 import tw from 'twin.macro';
 
+import { ComponentBaseProps } from '@src/types/BaseTypes';
 import { bgTransparentGray } from '@styles/globalStyles';
 
-interface RangeSliderProps {
+interface RangeSliderProps
+  extends ComponentBaseProps,
+    Omit<HTMLAttributes<HTMLInputElement>, 'onChange'> {
   min?: number;
   max?: number;
   value?: number;
+  step?: number;
   showCursor?: boolean;
-  Css?: CSSInterpolation;
   onChange?: (value: number) => void;
 }
 
@@ -19,9 +21,11 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   min = 0,
   max = 1000,
   value = 50,
+  step = 0.01,
   showCursor = false,
   Css,
   onChange,
+  ...rest
 }) => {
   // HTML Range input 의 값을 저장하는 변수
   const [valueState, setValueState] = useState<number>(value);
@@ -74,7 +78,9 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       css={[InputRangeStyle, Css]}
       min={min}
       max={max}
+      step={step}
       onChange={handleValueChange}
+      {...rest}
     />
   );
 };
