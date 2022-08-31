@@ -19,22 +19,19 @@ const VideoResult = React.forwardRef<HTMLDivElement, VideoResultProps>(
     }, [info, onClick]);
 
     return (
-      <div
-        css={[tw`p-4 h-[7.5rem] flex`, tw`hover:bg-gray-400`, Css]}
-        ref={ref}
-        {...rest}
-        onClick={handleClickResult}
-      >
+      <div css={[tw`w-full block`, Css]} ref={ref} {...rest} onClick={handleClickResult}>
         <img
           src={info.snippet.thumbnails.high.url}
           alt="Video Thumbnail"
-          css={tw`h-full rounded`}
+          css={[tw`w-full rounded my-2`, tw`md:h-full md:w-auto md:my-auto`]}
         />
-        <div css={tw`w-full ml-4`}>
-          <div css={tw`font-bold`}>
+        <div css={[tw`w-full m-auto`, tw`md:ml-4`]}>
+          <div css={tw`font-bold text-base overflow-hidden`} className="text-ellipsis">
             {info.snippet.title} [{info.snippet.channelTitle}]
           </div>
-          <div css={tw`text-sm`}>{info.snippet.description}</div>
+          <div className="text-ellipsis" css={tw`whitespace-nowrap overflow-hidden text-sm`}>
+            {info.snippet.description}
+          </div>
         </div>
       </div>
     );

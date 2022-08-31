@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { css } from '@emotion/react';
@@ -11,19 +11,26 @@ import CoverImage from '@components/CoverImage';
 import GradientCanvas, { Color } from '@components/GradientCanvas';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
+import PlayProvider, { playContext } from '@contexts/playContext';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 import { Lyrics } from '@src/types';
 import { getMusicInfo, getMusicLyrics } from '@utils/api';
-import { MusicInfo } from '@utils/api/types';
+
+import DefaultPlay from './DefaultPlay';
+import MobilePlay from './MobilePlay';
+
+// export interface PlayProps {
+//   musicInfo: MusicInfo;
+//   musicLyrics: Lyrics[];
+// }
 
 const Play: React.FC = () => {
   const { videoId: requestedVideoId } = useParams();
+  const { width: windowWidth } = useWindowDimensions();
+  const isMobile = useMemo(() => windowWidth <= 767, [windowWidth]);
 
-  const [musicInfo, setMusicInfo] = useState<MusicInfo | null>(null);
-  const [musicLyrics, setMusicLyrics] = useState<Lyrics[] | null>(null);
+  const { musicInfo, colors, setMusicInfo, setMusicLyrics, setColors } = useContext(playContext);
 
-  const [currentTime, setCurrentTime] = useState(0);
-  const [showLyrics, setShowLyrics] = useState(false);
-  const [colors, setColors] = useState<Color[]>();
   const { data: colorPalette } = usePalette(musicInfo?.thumbnail || '', 10, 'rgbArray', {
     crossOrigin: 'https://lh3.googleusercontent.com',
     quality: 1,
@@ -37,7 +44,7 @@ const Play: React.FC = () => {
 
       setColors(tempColors);
     }
-  }, [colorPalette]);
+  }, [colorPalette, setColors]);
 
   const fetchMusicInfo = useCallback(async (videoId: string) => {
     const info = await getMusicInfo(videoId);
@@ -47,11 +54,6 @@ const Play: React.FC = () => {
       .then((result) => result?.map((l, idx) => ({ ...l, id: idx })));
     return { info, lyrics };
   }, []);
-
-  const handleLyricsClick = useCallback((lyrics: Lyrics) => {
-    setCurrentTime(lyrics.startTime);
-  }, []);
-
   useEffect(() => {
     if (requestedVideoId) {
       fetchMusicInfo(requestedVideoId).then(({ info, lyrics }) => {
@@ -59,9 +61,9 @@ const Play: React.FC = () => {
         if (lyrics) setMusicLyrics(lyrics);
       });
     }
-  }, [fetchMusicInfo, requestedVideoId]);
+  }, [fetchMusicInfo, requestedVideoId, setMusicInfo, setMusicLyrics]);
 
-  const Grandient = useMemo(() => {
+  const Gradient = useMemo(() => {
     if (!colors) return null;
 
     return (
@@ -82,42 +84,10 @@ const Play: React.FC = () => {
   }, [colors]);
 
   return (
-    <DefaultLayout Css={[tw`flex-row`]}>
-      {musicInfo && (
-        <>
-          {Grandient}
-          <div
-            css={[tw`m-auto min-w-[35rem] mb-[5rem] inline-block`, showLyrics && tw`ml-[12rem]`]}
-          >
-            <CoverImage
-              src={musicInfo.thumbnail}
-              Css={[tw`mb-[3rem]`, !showLyrics && tw`w-[40rem]`]}
-            />
-            <AudioPlayer
-              isExplicit={musicInfo.isExplicit}
-              lyricsAvilable={Boolean(musicLyrics)}
-              playTime={currentTime}
-              onTimeUpdate={setCurrentTime}
-              onLyricsUpdate={setShowLyrics}
-              src={`/music/file/${musicInfo.videoId}`}
-              title={musicInfo.title}
-              artist={musicInfo.artists.join(', ')}
-              album={musicInfo.album}
-            />
-          </div>
-          {showLyrics && musicLyrics && (
-            <div css={tw`w-[50%] h-full flex flex-col mx-auto`}>
-              <LyricsList
-                lyricsList={musicLyrics}
-                currentTime={currentTime}
-                onLyricsClick={handleLyricsClick}
-                Css={tw`w-full`}
-              />
-            </div>
-          )}
-        </>
-      )}
-    </DefaultLayout>
+    <>
+      {Gradient}
+      {isMobile ? <MobilePlay /> : <DefaultPlay />}
+    </>
   );
 };
 

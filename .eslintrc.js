@@ -23,6 +23,7 @@ module.exports = {
     ignorePatterns: ['.eslintrc.js', 'vite.config.ts', 'tailwind.config.js', 'postcss.config.js', 'prettier.config.js'],
     plugins: ['react', '@typescript-eslint', 'eslint-plugin-import-helpers'],
     rules: {
+        'react/jsx-no-constructed-context-values': 'off',
         'jsx-a11y/click-events-have-key-events': 'off',
         'jsx-a11y/no-static-element-interactions': 'off',
         'react/require-default-props': 'off',

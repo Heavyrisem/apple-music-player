@@ -37,13 +37,7 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
   }, [currentTime, isActiveLyrics, lyricsList, prevLyrics]);
 
   return (
-    <div
-      css={[
-        tw`text-[#ffffff72] max-h-[40%] font-bold text-5xl overflow-y-scroll leading-relaxed m-auto`,
-        hideScrollbar,
-        Css,
-      ]}
-    >
+    <div css={[tw`text-[#ffffff72] font-bold text-3xl leading-relaxed m-auto`, hideScrollbar, Css]}>
       {lyricsList.map((lyrics) => {
         const activeLyrics = lyricsList.filter(isActiveLyrics);
         const isActive = lyricsList.filter(isActiveLyrics)[0]?.id === lyrics.id;

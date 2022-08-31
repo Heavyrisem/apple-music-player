@@ -37,7 +37,7 @@ const Home: React.FC = () => {
           tw`absolute`,
           css`
             z-index: -1;
-            color: rgb(255, 225, 33);
+            background: rgb(191, 0, 255);
           `,
         ]}
       />
@@ -45,14 +45,14 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <DefaultLayout Css={tw`mt-0 overflow-hidden`}>
+    <DefaultLayout Css={tw`w-screen mt-0 overflow-hidden`}>
       {Gradient}
 
-      <div css={[tw`w-[55rem] h-[30rem] m-auto mt-[15rem]`]}>
+      <div css={[tw`w-[85%] h-[30rem] m-auto mt-[30%]`, tw`md:max-w-[65rem] md:mt-[15rem]`]}>
         <div css={[tw`flex`]}>
           <div css={[tw`m-auto p-4 flex`]}>
             <ViteIcon Css={[tw`inline-block my-auto mr-4`]} />
-            <div css={tw`inline text-4xl text-white font-bold`}>React Music Player</div>
+            <div css={tw`inline text-2xl text-white font-bold md:text-4xl`}>React Music Player</div>
           </div>
         </div>
         <SearchBar
@@ -64,13 +64,18 @@ const Home: React.FC = () => {
           ]}
         />
         {Boolean(videoList.length) && (
-          <div css={[tw`w-full h-full mt-4 rounded-lg overflow-y-scroll`, bgTransparentGray]}>
+          <div
+            css={[
+              tw`w-full h-full mt-4 rounded-lg overflow-x-hidden overflow-y-scroll`,
+              bgTransparentGray,
+            ]}
+          >
             {videoList.map((video) => (
               <VideoResult
                 key={video.id.videoId}
                 info={video}
                 onClick={handleClickResult}
-                Css={HoverTransParentStyle}
+                Css={[tw`md:h-[7.5rem] md:flex hover:bg-gray-400 p-4`, HoverTransParentStyle]}
               />
             ))}
           </div>

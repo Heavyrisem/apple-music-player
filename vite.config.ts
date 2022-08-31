@@ -34,6 +34,7 @@ export default defineConfig({
       { find: '@styles', replacement: 'src/styles' },
       { find: '@assets', replacement: 'src/assets' },
       { find: '@utils', replacement: 'src/utils' },
+      { find: '@contexts', replacement: 'src/contexts' },
     ],
   },
   esbuild: {
@@ -42,7 +43,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/music': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
