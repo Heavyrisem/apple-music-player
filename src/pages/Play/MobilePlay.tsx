@@ -1,30 +1,21 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 
-import tw, { css } from 'twin.macro';
+import tw from 'twin.macro';
 
 import AudioPlayer from '@components/AudioPlayer';
 import CoverImage from '@components/CoverImage';
-import GradientCanvas from '@components/GradientCanvas';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
 import { playContext } from '@contexts/playContext';
-import useWindowDimensions from '@hooks/useWindowDimensions';
 
 const MobilePlay: React.FC = () => {
-  const { width: windowWidth } = useWindowDimensions();
-
   const {
     musicInfo,
     musicLyrics,
     currentTime,
     showLyrics,
-    colors,
-    // colorPalette,
-    setMusicInfo,
-    setMusicLyrics,
     setCurrentTime,
     setShowLyrics,
-    setColors,
     handleLyricsClick,
   } = useContext(playContext);
 
