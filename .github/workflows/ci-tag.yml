@@ -1,8 +1,9 @@
 name: AutomaticBuild # Github Action 페이지 좌측 리스트에 표시될 이름
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches: [master]
+    # tags:
+    #   - 'v*.*.*'
 
 env:
   DOCKER_IMAGE: ghcr.io/heavyrisem/music-front # ghcr에 업로드될 이미지 이름, format: ghcr.io/깃허브유저이름/이미지이름
@@ -36,12 +37,16 @@ jobs:
       # - name: Push
       #   run: docker push ${{ env.DOCKER_IMAGE }} --all-tags
 
+      - name: TEST
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME ${GITHUB_REF##*/}"
+
       # Build and Push
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true # ghcr에 push
-          tags: ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.tag }},${{ env.DOCKER_IMAGE }}:latest # 이미지 버전 [이미지 고유 아이디, latest]
+          tags: ${{ env.DOCKER_IMAGE }}:${{ GITHUB_REF##*/ }},${{ env.DOCKER_IMAGE }}:latest # 이미지 버전 [이미지 고유 아이디, latest]
           platforms: linux/arm64
           build-args: |
             NPM_TOKEN=${{ secrets.NPM_TOKEN }}
