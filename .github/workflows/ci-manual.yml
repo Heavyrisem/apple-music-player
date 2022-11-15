@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true # ghcr에 push
-          tags: ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.tag }}
+          tags: ${{ env.DOCKER_IMAGE }}:${{ GITHUB_REF_NAME }}
           platforms: linux/arm64
           build-args: |
             NPM_TOKEN=${{ secrets.NPM_TOKEN }}
