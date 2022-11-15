@@ -40,6 +40,7 @@ jobs:
         with:
           push: true # ghcr에 push
           tags: ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.tag }}
+          platforms: linux/arm64
           build-args: |
             NPM_TOKEN=${{ secrets.NPM_TOKEN }}
 
