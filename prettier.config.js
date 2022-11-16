@@ -5,5 +5,6 @@ module.exports = {
     tabWidth: 2,
     useTabs: false,
     plugins: [require('prettier-plugin-tailwindcss')],
-    twConfig: './tailwind.config.js'
+    twConfig: './tailwind.config.js',
+    endOfLine: 'auto'
 }

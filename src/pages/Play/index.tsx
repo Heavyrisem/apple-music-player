@@ -49,7 +49,7 @@ const Play: React.FC = () => {
   const fetchMusicInfo = useCallback(async (videoId: string) => {
     const info = await getMusicInfo(videoId);
     const lyrics = await getMusicLyrics(info.videoId)
-      .then((res) => res && fromVtt(res.lyrics, 's'))
+      .then((res) => res && fromVtt(res.lyrics.replaceAll('♪', '').trim(), 's'))
       .then((result) => result?.sort((a, b) => a.startTime - b.startTime))
       .then((result) => result?.map((l, idx) => ({ ...l, id: idx })));
     return { info, lyrics };
