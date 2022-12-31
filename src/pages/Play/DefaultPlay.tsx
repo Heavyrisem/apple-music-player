@@ -1,10 +1,9 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 
-import tw, { css } from 'twin.macro';
+import tw from 'twin.macro';
 
 import AudioPlayer from '@components/AudioPlayer';
 import CoverImage from '@components/CoverImage';
-import GradientCanvas from '@components/GradientCanvas';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import LyricsList from '@components/Lyrics';
 import { playContext } from '@contexts/playContext';
@@ -29,7 +28,7 @@ const DefaultPlay: React.FC = () => {
   } = useContext(playContext);
 
   return (
-    <DefaultLayout Css={[tw`flex-row`]}>
+    <DefaultLayout css={[tw`flex-row`]}>
       {musicInfo && (
         <>
           <div
@@ -40,7 +39,7 @@ const DefaultPlay: React.FC = () => {
           >
             <CoverImage
               src={musicInfo.thumbnail}
-              Css={[tw`mb-[3rem]`, showLyrics && tw`w-[40rem]`]}
+              css={[tw`mb-[3rem]`, showLyrics && tw`w-[40rem]`]}
             />
 
             <AudioPlayer
@@ -61,7 +60,7 @@ const DefaultPlay: React.FC = () => {
                 lyricsList={musicLyrics}
                 currentTime={currentTime}
                 onLyricsClick={handleLyricsClick}
-                Css={tw`w-full overflow-y-scroll max-h-[40%] text-5xl leading-relaxed`}
+                css={tw`w-full overflow-y-scroll max-h-[40%] text-5xl leading-relaxed`}
               />
             </div>
           )}

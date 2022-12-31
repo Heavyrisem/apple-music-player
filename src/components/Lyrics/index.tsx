@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 
 import tw from 'twin.macro';
 
@@ -9,7 +9,7 @@ import { replaceAll } from '@utils/string';
 
 import { FILTER_CHARACTERS } from './constant';
 
-interface LyricsProps extends ComponentBaseProps {
+interface LyricsProps extends ComponentBaseProps, HTMLAttributes<HTMLDivElement> {
   currentTime: number;
   lyricsList: Lyrics[];
   onLyricsClick?: (lryics: Lyrics) => void;
@@ -17,7 +17,12 @@ interface LyricsProps extends ComponentBaseProps {
 
 const ActiveLyricsStyle = tw`text-white`;
 
-const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsClick, Css }) => {
+const LyricsList: React.FC<LyricsProps> = ({
+  currentTime,
+  lyricsList,
+  onLyricsClick,
+  ...props
+}) => {
   const activeElement = useRef<HTMLDivElement>(null);
   const [prevLyrics, setPrevLyrics] = useState<Lyrics>();
 
@@ -37,7 +42,10 @@ const LyricsList: React.FC<LyricsProps> = ({ currentTime, lyricsList, onLyricsCl
   }, [currentTime, isActiveLyrics, lyricsList, prevLyrics]);
 
   return (
-    <div css={[tw`text-[#ffffff72] font-bold text-3xl leading-relaxed m-auto`, hideScrollbar, Css]}>
+    <div
+      css={[tw`text-[#ffffff72] font-bold text-3xl leading-relaxed m-auto`, hideScrollbar]}
+      {...props}
+    >
       {lyricsList.map((lyrics) => {
         const activeLyrics = lyricsList.filter(isActiveLyrics);
         const isActive = lyricsList.filter(isActiveLyrics)[0]?.id === lyrics.id;

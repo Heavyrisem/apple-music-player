@@ -1,9 +1,7 @@
-import { CSSInterpolation } from '@emotion/serialize';
+import { HTMLAttributes } from 'react';
 
-export interface ComponentBaseProps {
-  Css?: CSSInterpolation;
-}
+export interface ComponentBaseProps {}
 
-export interface IconBaseProps extends ComponentBaseProps {
+export interface IconBaseProps extends ComponentBaseProps, HTMLAttributes<SVGElement> {
   fillColor?: string;
 }

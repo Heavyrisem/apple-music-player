@@ -16,8 +16,11 @@ declare module 'react' {
     tw?: string;
   }
   // The inline svg css prop
-  interface SVGProps<T> extends SVGProps<SVGSVGElement> {
+  interface SVGProps<T> extends SVGProps<T> {
     css?: CSSInterpolation;
     tw?: string;
+  }
+  interface CSSProperties {
+    [key: `--${string}`]: string | number;
   }
 }

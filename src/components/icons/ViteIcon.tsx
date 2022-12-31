@@ -4,7 +4,7 @@ import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface ViteIconProps extends IconBaseProps {}
 
-const ViteIcon: React.FC<ViteIconProps> = ({ Css }) => {
+const ViteIcon: React.FC<ViteIconProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@ const ViteIcon: React.FC<ViteIconProps> = ({ Css }) => {
       height="32"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 256 257"
-      css={Css}
+      {...props}
     >
       <defs>
         <linearGradient

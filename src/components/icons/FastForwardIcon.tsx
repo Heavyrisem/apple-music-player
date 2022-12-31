@@ -4,9 +4,9 @@ import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface FaseForwardIconProps extends IconBaseProps {}
 
-const FastForwardIcon: React.FC<FaseForwardIconProps> = ({ Css, fillColor }) => {
+const FastForwardIcon: React.FC<FaseForwardIconProps> = ({ fillColor, ...props }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24" css={Css}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24" {...props}>
       <g id="그룹_3400" data-name="그룹 3400" transform="translate(-233 -81)">
         <rect
           id="사각형_494"

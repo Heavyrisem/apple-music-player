@@ -4,9 +4,9 @@ import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface QuoteBubbleIconProps extends IconBaseProps {}
 
-const QuoteBubbleIcon: React.FC<QuoteBubbleIconProps> = ({ Css, fillColor }) => {
+const QuoteBubbleIcon: React.FC<QuoteBubbleIconProps> = ({ fillColor, ...props }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" css={Css}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" {...props}>
       <g id="그룹_3411" data-name="그룹 3411" transform="translate(-339 -76)">
         <g id="그룹_3402" data-name="그룹 3402" transform="translate(326 33)">
           <rect

@@ -23,9 +23,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   value = 50,
   step = 0.01,
   showCursor = false,
-  Css,
   onChange,
-  ...rest
+  ...props
 }) => {
   // HTML Range input 의 값을 저장하는 변수
   const [valueState, setValueState] = useState<number>(value);
@@ -75,12 +74,12 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
     <input
       type="range"
       value={valueState}
-      css={[InputRangeStyle, Css]}
+      css={[InputRangeStyle]}
       min={min}
       max={max}
       step={step}
       onChange={handleValueChange}
-      {...rest}
+      {...props}
     />
   );
 };

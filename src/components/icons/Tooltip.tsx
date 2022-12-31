@@ -9,9 +9,9 @@ interface TooltipProps {
   showTooltip: boolean;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ content, children, showTooltip }) => {
+const Tooltip: React.FC<TooltipProps> = ({ content, children, showTooltip, ...props }) => {
   return (
-    <div className="group" css={tw`relative flex flex-col items-center`}>
+    <div className="group" css={tw`relative flex flex-col items-center`} {...props}>
       {children}
       <div
         css={[

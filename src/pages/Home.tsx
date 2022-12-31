@@ -33,11 +33,10 @@ const Home: React.FC = () => {
         ]}
         fps={60}
         speed={0.1}
-        Css={[
-          tw`absolute`,
+        css={[
+          tw`absolute bg-[rgb(191, 0, 255)]`,
           css`
             z-index: -1;
-            background: rgb(191, 0, 255);
           `,
         ]}
       />
@@ -45,20 +44,20 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <DefaultLayout Css={tw`w-screen mt-0 overflow-hidden`}>
+    <DefaultLayout css={tw`w-screen mt-0 overflow-hidden`}>
       {Gradient}
 
       <div css={[tw`w-[85%] h-[30rem] m-auto mt-[30%]`, tw`md:max-w-[65rem] md:mt-[15rem]`]}>
         <div css={[tw`flex`]}>
           <div css={[tw`m-auto p-4 flex`]}>
-            <ViteIcon Css={[tw`inline-block my-auto mr-4`]} />
+            <ViteIcon css={[tw`inline-block my-auto mr-4`]} />
             <div css={tw`inline text-2xl text-white font-bold md:text-4xl`}>React Music Player</div>
           </div>
         </div>
         <SearchBar
           onSearch={handleSearch}
-          placeholder="Search Videos From Youtube"
-          Css={[
+          placeholder="Search Video From Youtube"
+          css={[
             tw`text-white placeholder:text-black placeholder:text-opacity-30`,
             bgTransparentGray,
           ]}
@@ -75,7 +74,7 @@ const Home: React.FC = () => {
                 key={video.id.videoId}
                 info={video}
                 onClick={handleClickResult}
-                Css={[tw`md:h-[7.5rem] md:flex hover:bg-gray-400 p-4`, HoverTransParentStyle]}
+                css={[tw`md:h-[7.5rem] md:flex hover:bg-gray-400 p-4`, HoverTransParentStyle]}
               />
             ))}
           </div>

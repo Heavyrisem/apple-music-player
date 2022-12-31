@@ -5,6 +5,7 @@ import PlayProvider from '@contexts/playContext';
 import Home from '@pages/Home';
 import Play from '@pages/Play';
 
+// TODO: 필요시 Router 분리
 const App: React.FC = () => {
   return (
     <BrowserRouter>

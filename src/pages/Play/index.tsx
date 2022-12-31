@@ -6,14 +6,9 @@ import { usePalette } from 'color-thief-react';
 import { fromVtt } from 'subtitles-parser-vtt';
 import tw from 'twin.macro';
 
-import AudioPlayer from '@components/AudioPlayer';
-import CoverImage from '@components/CoverImage';
 import GradientCanvas, { Color } from '@components/GradientCanvas';
-import DefaultLayout from '@components/Layouts/DefaultLayout';
-import LyricsList from '@components/Lyrics';
-import PlayProvider, { playContext } from '@contexts/playContext';
+import { playContext } from '@contexts/playContext';
 import useWindowDimensions from '@hooks/useWindowDimensions';
-import { Lyrics } from '@src/types';
 import { getMusicInfo, getMusicLyrics } from '@utils/api';
 
 import DefaultPlay from './DefaultPlay';
@@ -72,7 +67,7 @@ const Play: React.FC = () => {
         fps={45}
         speed={0.1}
         // particleNumber={1}
-        Css={[
+        css={[
           tw`absolute`,
           css`
             background: rgb(${colors[0].r} ${colors[0].g} ${colors[0].b});

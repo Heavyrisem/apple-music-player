@@ -4,7 +4,7 @@ import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface FastReverseIconProps extends IconBaseProps {}
 
-const FastReverseIcon: React.FC<FastReverseIconProps> = ({ Css, fillColor }) => {
+const FastReverseIcon: React.FC<FastReverseIconProps> = ({ fillColor, ...props }) => {
   return (
     <svg
       id="그룹_3400"
@@ -13,7 +13,7 @@ const FastReverseIcon: React.FC<FastReverseIconProps> = ({ Css, fillColor }) => 
       width="26"
       height="24"
       viewBox="0 0 26 24"
-      css={Css}
+      {...props}
     >
       <rect
         id="사각형_494"

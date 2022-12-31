@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { HTMLAttributes, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import tw from 'twin.macro';
 
@@ -11,7 +11,7 @@ export interface Color {
   g: number;
   b: number;
 }
-interface GradientCanvasProps extends ComponentBaseProps {
+interface GradientCanvasProps extends ComponentBaseProps, HTMLAttributes<HTMLDivElement> {
   colors: Color[];
   fps?: number;
   particleNumber?: number;
@@ -42,7 +42,7 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
   fps = 24,
   particleNumber = 10,
   speed = 1,
-  Css,
+  ...props
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D>();
@@ -192,7 +192,7 @@ const GradientCanvas: React.FC<GradientCanvasProps> = ({
   // }, [particlesRef]);
 
   return (
-    <div css={[tw`w-full h-full`, Css]}>
+    <div css={[tw`w-full h-full`]} {...props}>
       <canvas ref={canvasRef} css={[tw`w-full h-full`]} />
     </div>
   );

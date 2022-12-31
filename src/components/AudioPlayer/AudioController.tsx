@@ -71,39 +71,39 @@ const AudioController: React.FC<AudioControllerProps> = ({
                   value={volume}
                   onChange={onVolumeChange}
                   showCursor
-                  Css={tw`w-[5rem]`}
+                  css={tw`w-[5rem]`}
                 />
               }
             >
               <VolumeIcon
                 onClick={() => setShowAudioController(!showAudioController)}
                 fillColor={variables.transparentGray}
-                Css={tw`m-auto w-[1.5rem] h-[1.5rem]`}
+                css={tw`m-auto w-[1.5rem] h-[1.5rem]`}
               />
             </Tooltip>
           </div>
 
           <span css={tw`flex`}>
             <span css={ControlIconStyle}>
-              <FastReverseIcon fillColor={variables.transparentGray} Css={tw`m-auto`} />
+              <FastReverseIcon fillColor={variables.transparentGray} css={tw`m-auto`} />
             </span>
 
             <span css={ControlIconStyle} onClick={onPlayClick}>
               {isPlaying ? (
                 <PauseIcon
                   fillColor={variables.transparentGray}
-                  Css={tw`w-[1.2rem] h-[1.2rem] m-auto`}
+                  css={tw`w-[1.2rem] h-[1.2rem] m-auto`}
                 />
               ) : (
                 <PlayIcon
                   fillColor={variables.transparentGray}
-                  Css={tw`w-[1.2rem] h-[1.2rem] m-auto`}
+                  css={tw`w-[1.2rem] h-[1.2rem] m-auto`}
                 />
               )}
             </span>
 
             <span css={ControlIconStyle}>
-              <FastForwardIcon fillColor={variables.transparentGray} Css={tw`m-auto`} />
+              <FastForwardIcon fillColor={variables.transparentGray} css={tw`m-auto`} />
             </span>
           </span>
 
@@ -115,7 +115,7 @@ const AudioController: React.FC<AudioControllerProps> = ({
             ]}
             onClick={onLyricClick}
           >
-            <QuoteBubbleIcon fillColor={variables.transparentGray} Css={tw`m-auto`} />
+            <QuoteBubbleIcon fillColor={variables.transparentGray} css={tw`m-auto`} />
           </div>
         </div>
       ) : (

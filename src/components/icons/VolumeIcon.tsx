@@ -6,7 +6,7 @@ interface VolumeIconProps extends IconBaseProps {
   onClick?: () => void;
 }
 
-const VolumeIcon: React.FC<VolumeIconProps> = ({ Css, fillColor, onClick }) => {
+const VolumeIcon: React.FC<VolumeIconProps> = ({ fillColor, onClick, ...props }) => {
   return (
     <svg
       onClick={onClick}
@@ -14,7 +14,7 @@ const VolumeIcon: React.FC<VolumeIconProps> = ({ Css, fillColor, onClick }) => {
       width="20"
       height="19"
       viewBox="0 0 20 19"
-      css={Css}
+      {...props}
     >
       <g id="그룹_3414" data-name="그룹 3414" transform="translate(-495 -42)">
         <g id="그룹_3412" data-name="그룹 3412" transform="translate(156 -34)">

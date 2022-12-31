@@ -4,9 +4,9 @@ import { IconBaseProps } from '@src/types/BaseTypes';
 
 interface PlayIconProps extends IconBaseProps {}
 
-const PlayIcon: React.FC<PlayIconProps> = ({ Css, fillColor }) => {
+const PlayIcon: React.FC<PlayIconProps> = ({ fillColor, ...props }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" css={Css}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" {...props}>
       <g id="그룹_3399" data-name="그룹 3399" transform="translate(-14 -43)">
         <rect
           id="사각형_497"

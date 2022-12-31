@@ -20,7 +20,7 @@ const MobilePlay: React.FC = () => {
   } = useContext(playContext);
 
   return (
-    <DefaultLayout Css={[tw`h-screen flex-row overflow-hidden`]}>
+    <DefaultLayout css={[tw`h-screen flex-row overflow-hidden`]}>
       {musicInfo && (
         <div
           css={[
@@ -29,7 +29,7 @@ const MobilePlay: React.FC = () => {
             //   tw`sm:w-full sm:m-0 sm:px-[15%]`,
           ]}
         >
-          <CoverImage src={musicInfo.thumbnail} Css={[tw`w-full`, !showLyrics && tw`mb-8`]} />
+          <CoverImage src={musicInfo.thumbnail} css={[tw`w-full`, !showLyrics && tw`mb-8`]} />
 
           {showLyrics && musicLyrics && (
             <div css={tw`h-[15rem] py-5`}>
@@ -37,7 +37,7 @@ const MobilePlay: React.FC = () => {
                 lyricsList={musicLyrics}
                 currentTime={currentTime}
                 onLyricsClick={handleLyricsClick}
-                Css={tw`w-full h-full overflow-scroll`}
+                css={tw`w-full h-full overflow-scroll`}
               />
             </div>
           )}
